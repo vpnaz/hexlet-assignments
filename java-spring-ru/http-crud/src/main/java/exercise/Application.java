@@ -34,14 +34,14 @@ public class Application {
 
     @PostMapping("/posts")
     public Post create(@RequestBody Post post) {
-        posts.add(Post);
+        posts.add(post);
         return post;
     }
 
     @GetMapping("/posts/{id}")
     public Optional<Post> show(@PathVariable String id) {
-        var Post = posts.stream()
-            .filter(p -> p.getSlug().equals(id))
+        var post = posts.stream()
+            .filter(p -> p.getId().equals(id))
             .findFirst();
         return post;
     }
@@ -49,12 +49,12 @@ public class Application {
     @PutMapping("/posts/{id}")
     public Post update(@PathVariable String id, @RequestBody Post data) {
         var maybePost = posts.stream()
-            .filter(p -> p.getSlug().equals(id))
+            .filter(p -> p.getId().equals(id))
             .findFirst();
         if (maybePost.isPresent()) {
-            var Post = maybePost.get();
-            post.setSlug(data.getSlug());
-            post.setName(data.getName());
+            var post = maybePost.get();
+            post.setId(data.getId());
+            post.setTitle(data.getTitle());
             post.setBody(data.getBody());
         }
         return data;
@@ -62,7 +62,7 @@ public class Application {
 
     @DeleteMapping("/posts/{id}")
     public void destroy(@PathVariable String id) {
-        posts.removeIf(p -> p.getSlug().equals(id));
+        posts.removeIf(p -> p.getId().equals(id));
     }
     // END
 }
