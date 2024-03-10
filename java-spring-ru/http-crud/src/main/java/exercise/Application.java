@@ -34,23 +34,27 @@ public class Application {
 
     @PostMapping("/posts")
     public Post create(@RequestBody Post post) {
-        posts.add(post);
+        posts.add(Post);
         return post;
     }
 
     @GetMapping("/posts/{id}")
     public Optional<Post> show(@PathVariable String id) {
-        var post = posts.stream().filter(p -> p.getSlug().equals(id)).findFirst();
+        var Post = posts.stream()
+            .filter(p -> p.getSlug().equals(id))
+            .findFirst();
         return post;
     }
 
     @PutMapping("/posts/{id}")
     public Post update(@PathVariable String id, @RequestBody Post data) {
-        var maybePost = posts.stream().filter(p -> p.getSlug().equals(id)).findFirst();
+        var maybePost = posts.stream()
+            .filter(p -> p.getSlug().equals(id))
+            .findFirst();
         if (maybePost.isPresent()) {
-            var post = maybePost.get();
-            post.setSlug(data.getSlug);
-            post.setname(data.getName());
+            var Post = maybePost.get();
+            post.setSlug(data.getSlug());
+            post.setName(data.getName());
             post.setBody(data.getBody());
         }
         return data;
